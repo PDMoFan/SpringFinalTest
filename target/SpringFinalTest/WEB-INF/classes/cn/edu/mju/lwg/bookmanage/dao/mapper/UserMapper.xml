@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.mju.lwg.bookmanage.dao.IUserDao">
+    <resultMap id="results" type="cn.edu.mju.lwg.bookmanage.entity.User">
+        <id property="id" column="id" javaType="String" jdbcType="VARCHAR"></id>
+        <result property="name" column="name" javaType="String"  jdbcType="VARCHAR"></result>
+        <result property="password" column="password" javaType="String" jdbcType="VARCHAR"></result>
+        <result property="book_id" column="book_id" javaType="String" jdbcType="VARCHAR"></result>
+        <collection property="books" ofType="cn.edu.mju.lwg.bookmanage.entity.Book"
+                    column="id" select="cn.edu.mju.lwg.bookmanage.dao.IBookDao.findByUserId">
+        </collection>
+    </resultMap>
+    <insert id="insert" parameterType="cn.edu.mju.lwg.bookmanage.entity.User">
+        INSERT INTO user(id,name,password) VALUE (#{id},#{name},#{password})
+    </insert>
+    <delete id="delete" parameterType="String">
+        DELETE FROM user WHERE id=#{id}
+    </delete>
+    <delete id="deleteMore" parameterType="String">
+        DELETE FROM user WHERE id IN
+        <foreach collection="array" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <update id="update" parameterType="cn.edu.mju.lwg.bookmanage.entity.User">
+        UPDATE user SET name=#{name},password=#{password} WHERE id=#{id}
+    </update>
+    <update id="updatePass">
+        UPDATE user SET password=#{password} WHERE id=#{id}
+    </update>
+    <select id="findAll" resultType="cn.edu.mju.lwg.bookmanage.entity.User">
+    SELECT * FROM user
+    </select>
+    <select id="findByUserId"  resultType="cn.edu.mju.lwg.bookmanage.entity.User">
+         SELECT * FROM user WHERE book_id=#{book_id}
+    </select>
+    <select id="findById" parameterType="String" resultType="cn.edu.mju.lwg.bookmanage.entity.User">
+        SELECT * FROM user WHERE id=#{id}
+    </select>
+    <select id="findIds" parameterType="String" resultType="cn.edu.mju.lwg.bookmanage.entity.User">
+        SELECT * FROM user
+        <where>
+            <if test="_parameter != null">
+                and id like concat('%',#{_parameter},'%')
+            </if>
+        </where>
+    </select>
+    <select id="findAllWithBook" parameterType="String" resultMap="results">
+        SELECT * FROM user WHERE id=#{id}
+    </select>
+
+</mapper>

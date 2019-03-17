@@ -1,0 +1,4 @@
+cn\edu\mju\lwg\bookmanage\interceptor\AdminInterceptor.class
+cn\edu\mju\lwg\bookmanage\entity\Pagination.class
+cn\edu\mju\lwg\bookmanage\action\AdminAction.class
+cn\edu\mju\lwg\bookmanage\interceptor\LoginInterceptor.class

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.edu.mju.lwg.bookmanage.dao.IAdministratorDao">
+    <insert id="insert" parameterType="cn.edu.mju.lwg.bookmanage.entity.Administrator">
+        INSERT INTO administrator(id,name,password) VALUE (#{id},#{name},#{password})
+    </insert>
+    <delete id="delete" parameterType="String">
+        DELETE FROM administrator WHERE id=#{id}
+    </delete>
+    <update id="update" parameterType="cn.edu.mju.lwg.bookmanage.entity.Administrator">
+        UPDATE administrator SET name=#{name},password=#{password} WHERE id=#{id}
+    </update>
+    <select id="findAll" resultType="cn.edu.mju.lwg.bookmanage.entity.Administrator">
+    SELECT * FROM administrator
+    </select>
+
+</mapper>
